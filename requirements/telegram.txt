@@ -1,0 +1,37 @@
+# Telegram-specific Requirements
+-r base.txt
+
+# Telegram Bot Libraries
+python-telegram-bot==20.3
+telethon==1.28.5
+
+# Additional Telegram-related Libraries
+pyrogram==2.0.106
+tgcrypto==1.2.5
+
+# Async Support for Telegram
+aiogram==3.0.0rc1
+aiohttp==3.8.4
+
+# Telegram API Wrapper
+telegram-client==0.1.0
+
+# Optional: Telegram Proxy Support
+PySocks==1.7.1
+
+# Notification and Logging
+apprise==1.2.0
+
+# Rate Limiting and Flood Control
+ratelimit==2.2.1
+
+# Webhook Support
+fastapi==0.95.1
+uvicorn==0.22.0
+
+# JSON Handling
+orjson==3.8.10
+
+# Advanced Async Support
+asyncio==3.4.3
+aiofiles==23.1.0
