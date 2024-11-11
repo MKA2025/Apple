@@ -1,0 +1,190 @@
+# Telegram Bot Configuration for Gamdl
+
+# Bot Authentication
+authentication:
+  bot_token: 'your_telegram_bot_TOKEN'
+  bot_username: 'gamdl_bot'
+  
+  # Multiple bot token support for redundancy
+  fallback_tokens:
+    - 'backup_token_1'
+    - 'backup_token_2'
+
+# Telegram Bot Settings
+bot_configuration:
+  # Basic Bot Metadata
+  name: 'Gamdl Download Assistant'
+  description: 'Telegram bot for Apple Music downloads'
+  version: '1.0.0'
+  
+  # Bot Permissions
+  permissions:
+    allow_private_chats: true
+    allow_group_chats: false
+    allow_inline_mode: false
+
+# Notification Channels
+notification_channels:
+  # Default Channel Configuration
+  default:
+    chat_id: '-1001234567890'  # Group or Channel ID
+    message_format: 'markdown'
+    
+  # Multiple Channel Support
+  channels:
+    downloads:
+      chat_id: '-1001987654321'
+      name: 'Gamdl Downloads'
+      
+    errors:
+      chat_id: '-1001567890123'
+      name: 'Gamdl Error Logs'
+      
+    updates:
+      chat_id: '-1001234567890'
+      name: 'Gamdl Updates'
+
+# Notification Types
+notifications:
+  # Download Notifications
+  downloads:
+    enabled: true
+    include_details:
+      - track_name
+      - artist
+      - album
+      - download_quality
+      - file_size
+    
+  # Error Notifications
+  errors:
+    enabled: true
+    severity_levels:
+      - critical
+      - high
+    include_details:
+      - error_message
+      - error_type
+      - timestamp
+      - stack_trace
+    
+  # System Updates
+  system_updates:
+    enabled: true
+    notify_on:
+      - app_start
+      - app_stop
+      - config_changes
+      - version_updates
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  max_messages_per_minute: 10
+  max_messages_per_hour: 50
+  
+  # Adaptive rate limiting
+  adaptive_strategy:
+    enabled: true
+    increase_threshold: 20
+    decrease_threshold: 5
+
+# Message Formatting
+message_formatting:
+  # Emoji and Icon Configuration
+  emojis:
+    download_success: '✅'
+    download_failure: '❌'
+    warning: '⚠️'
+    info: 'ℹ️'
+    error: '🚨'
+  
+  # Custom Formatting Templates
+  templates:
+    download_success: |
+      {emoji_success} *Download Complete*
+      📀 Track: `{track_name}`
+      🎤 Artist: `{artist}`
+      💿 Album: `{album}`
+      📊 Quality: `{quality}`
+    
+    download_failure: |
+      {emoji_error} *Download Failed*
+      🔥 Error: `{error_message}`
+      📅 Time: `{timestamp}`
+
+# Security Configuration
+security:
+  # User Whitelist
+  allowed_users:
+    - 123456789  # Telegram User ID
+    - 987654321
+  
+  # IP Whitelisting
+  allowed_ips:
+    - '192.168.1.0/24'
+    - '10.0.0.0/16'
+  
+  # Token Rotation
+  token_rotation:
+    enabled: true
+    rotation_interval_days: 30
+
+# Logging Configuration
+logging:
+  enabled: true
+  log_interactions: true
+  log_path: './logs/telegram_bot.log'
+  retention_days: 30
+
+# Advanced Features
+advanced_features:
+  # Webhook Configuration
+  webhook:
+    enabled: true
+    url: 'https://your-domain.com/telegram-webhook'
+    ssl_certificate: '/path/to/ssl/certificate'
+    max_connections: 40
+  
+  # Custom Commands
+  custom_commands:
+    - name: 'start'
+      description: 'Initialize bot interaction'
+    
+    - name: 'status'
+      description: 'Get current download status'
+    
+    - name: 'help'
+      description: 'Show available commands'
+
+# Performance Monitoring
+performance:
+  enabled: true
+  metrics:
+    - message_processing_time
+    - download_success_rate
+    - error_rate
+  
+  monitoring_interval_minutes: 15
+
+# Internationalization
+internationalization:
+  default_language: 'en'
+  supported_languages:
+    - 'en'
+    - 'es'
+    - 'fr'
+    - 'de'
+  
+  language_detection:
+    enabled: true
+    method: 'user_preference'
+
+# Backup and Redundancy
+backup:
+  enabled: true
+  backup_bot_tokens:
+    - 'backup_token_1'
+    - 'backup_token_2'
+  
+  failover_strategy: 'sequential'
