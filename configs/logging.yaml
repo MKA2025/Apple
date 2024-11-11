@@ -1,0 +1,202 @@
+# Advanced Logging Configuration
+
+# Global Logging Settings
+version: 1
+disable_existing_loggers: false
+
+# Formatters Define Log Message Formats
+formatters:
+  standard:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  detailed:
+    format: '[%(asctime)s] %(levelname)8s | %(name)25s | %(filename)s:%(lineno)d | %(message)s'
+    datefmt: '%Y-%m-%d %H:%M:%S'
+  
+  json:
+    (): jsonlogger.JsonFormatter
+    format: '%(asctime)s %(name)s %(levelname)s %(message)s %(pathname)s %(lineno)d'
+  
+  colorlog:
+    (): colorlog.ColoredFormatter
+    format: '%(log_color)s%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    log_colors:
+      DEBUG: cyan
+      INFO: green
+      WARNING: yellow
+      ERROR: red
+      CRITICAL: red,bg_white
+
+# Filters for Log Filtering
+filters:
+  require_debug_false:
+    (): django.utils.log.RequireDebugFalse
+  
+  require_debug_true:
+    (): django.utils.log.RequireDebugTrue
+
+# Handlers Define Log Destinations
+handlers:
+  # Console Handlers
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: colorlog
+    stream: ext://sys.stdout
+
+  console_error:
+    class: logging.StreamHandler
+    level: ERROR
+    formatter: detailed
+    stream: ext://sys.stderr
+
+  # File Handlers
+  file_info:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: standard
+    filename: ./logs/app_info.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+    encoding: utf-8
+
+  file_error:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: detailed
+    filename: ./logs/app_error.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 5
+    encoding: utf-8
+
+  # Advanced Handlers
+  syslog:
+    class: logging.handlers.SysLogHandler
+    level: WARNING
+    formatter: standard
+    address: /dev/log
+
+  email:
+    class: logging.handlers.SMTPHandler
+    level: CRITICAL
+    formatter: detailed
+    mailhost: localhost
+    fromaddr: app-logs@example.com
+    toaddrs: 
+      - admin@example.com
+    subject: Critical Application Error
+
+  # Slack/Discord Webhook Logging
+  slack_webhook:
+    class: logging.handlers.HTTPHandler
+    level: ERROR
+    formatter: json
+    host: https://hooks.slack.com
+    method: POST
+    secure: true
+
+# Loggers Define Log Configurations for Different Components
+loggers:
+  # Root Logger Configuration
+  '':
+    level: INFO
+    handlers: 
+      - console
+      - file_info
+    propagate: true
+
+  # Application-Specific Loggers
+  gamdl:
+    level: DEBUG
+    handlers: 
+      - console
+      - file_info
+      - file_error
+    propagate: false
+
+  # Third-Party Library Loggers
+  urllib3:
+    level: WARNING
+    handlers: 
+      - console_error
+    propagate: false
+
+  requests:
+    level: WARNING
+    handlers: 
+      - console_error
+    propagate: false
+
+  aiohttp:
+    level: WARNING
+    handlers: 
+      - console_error
+    propagate: false
+
+  # Performance and Security Loggers
+  security:
+    level: WARNING
+    handlers:
+      - file_error
+      - syslog
+    propagate: false
+
+  performance:
+    level: INFO
+    handlers:
+      - file_info
+    propagate: false
+
+# Logging Configuration for Different Environments
+environments:
+  development:
+    level: DEBUG
+    console_level: DEBUG
+    file_logging: true
+    max_log_files: 3
+    max_log_size_mb: 5
+
+  production:
+    level: INFO
+    console_level: WARNING
+    file_logging: true
+    max_log_files: 10
+    max_log_size_mb: 20
+    error_notifications: 
+      email: true
+      slack: true
+
+# Log Rotation and Retention Policy
+log_rotation:
+  max_total_size_gb: 2
+  max_days_to_keep: 30
+  compression: true
+  compress_format: gz
+
+# Performance Monitoring
+performance_tracking:
+  enabled: true
+  log_slow_requests: true
+  slow_request_threshold_ms: 500
+  log_memory_usage: true
+  memory_threshold_percent: 80
+
+# Sensitive Data Handling
+sensitive_data:
+  mask_patterns:
+    - pattern: '(?i)password=\w+'
+      replacement: 'password=****'
+    - pattern: '(?i)token=\w+'
+      replacement: 'token=****'
+    - pattern: '\d{16}'  # Credit card numbers
+      replacement: '****'
+
+# Compliance and Audit Logging
+audit_logging:
+  enabled: true
+  log_user_actions: true
+  log_system_events: true
+  retention_days: 90
+
+# Example Python Configuration Loading
