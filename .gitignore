@@ -1,0 +1,260 @@
+# Python Specific
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+.env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE Specific
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Specific Project Directories
+downloads/
+logs/
+backups/
+config/
+*.log
+*.sqlite3
+
+# Sensitive Information
+.env
+*.env
+!.env.example
+secrets.yml
+*.pem
+*.key
+
+# Dependency Caches
+.pip-cache/
+.cache/
+.pytest_cache/
+
+# Compiled / Optimized Files
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Testing and Coverage
+.coverage
+.pytest_cache/
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Monitoring and Profiling
+*.prof
+*.lprof
+.pyinstrument/
+
+# Packaging and Distribution
+*.manifest
+*.spec
+MANIFEST.in
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Audio and Media Temp Files
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.temp
+
+# Machine Learning Models
+*.pkl
+*.model
+*.h5
+
+# Docker
+.dockerignore
+*.dockerfile.swp
+
+# Monitoring and Logging
+*.pid
+*.state
+
+# Backup files
+*.bak
+*.gho
+*.ori
+*.orig
+*.tmp
+
+# Custom Project Specific
+media/
+static/
+public/
+
+# Large Data Files (optional)
+*.csv
+*.json
+*.xml
+
+# Security Scan Files
+bandit-report.json
+safety-report.txt
+
+# Performance Profiling
+*.lprof
+*.prof
+
+# Specific to Gamdl
+config.yaml
+user_config.json
+*.session
+*.session-journal
+
+# Telegram Session Files
+*.session
+*.session-journal
+
+# Spotify Cache
+.spotify-cache
+
+# External Tools
+.dccache
+.eslintcache
+
+# Application Specific Temp
+temp/
+tmp/
+
+# Runtime Data
+run/
+
+# Custom Ignore (Add project-specific files)
+# Add any additional project-specific files or directories here
