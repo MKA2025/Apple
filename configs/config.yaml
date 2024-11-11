@@ -1,0 +1,170 @@
+# Gamdl Configuration File
+# Comprehensive settings for Apple Music Downloader
+
+# Application Metadata
+app:
+  name: Gamdl
+  version: '2.0.0'
+  description: Advanced Apple Music Downloader
+  repository: 'https://github.com/your-repo/gamdl'
+  license: MIT
+
+# Logging Configuration
+logging:
+  level: INFO
+  format: '[%(levelname)s] %(asctime)s - %(message)s'
+  file:
+    enabled: true
+    path: './logs/gamdl.log'
+    max_size_mb: 10
+    backup_count: 5
+
+# Download Settings
+download:
+  # Default download paths
+  paths:
+    music: './Downloads/Music'
+    videos: './Downloads/Videos'
+    playlists: './Downloads/Playlists'
+    temp: './temp'
+
+  # Default naming templates
+  templates:
+    album: '{album_artist}/{album}'
+    compilation: 'Compilations/{album}'
+    single_disc: '{track:02d} {title}'
+    multi_disc: '{disc}-{track:02d} {title}'
+    no_album: '{artist}/Unknown Album'
+    playlist: 'Playlists/{playlist_artist}/{playlist_title}'
+
+  # File naming options
+  filename:
+    max_length: 255
+    replace_chars:
+      - ['/', '_']
+      - ['\\', '_']
+      - [':', ' -']
+
+# Media Quality Preferences
+media:
+  audio:
+    preferred_codecs:
+      - 'ALAC'
+      - 'AAC'
+      - 'AAC-HE'
+    default_codec: 'AAC'
+    bitrate_preference: 256  # kbps
+
+  video:
+    preferred_codecs:
+      - 'H265'
+      - 'H264'
+    default_codec: 'H264'
+    resolution_preference: 1080
+
+  cover:
+    formats:
+      - 'JPG'
+      - 'PNG'
+    default_format: 'JPG'
+    size: 1200  # pixels
+
+# Authentication & API Settings
+authentication:
+  cookies:
+    path: '~/.gamdl/cookies.txt'
+    refresh_interval_days: 30
+
+  apple_music_api:
+    base_url: 'https://api.music.apple.com/v1'
+    storefront: 'us'
+    language: 'en-US'
+
+# Rate Limiting Configuration
+rate_limiting:
+  enabled: true
+  default_strategy: 'sliding_window'
+  strategies:
+    download:
+      max_calls: 5
+      period_seconds: 60
+    api_requests:
+      max_calls: 10
+      period_seconds: 60
+
+# External Tool Configurations
+external_tools:
+  ffmpeg:
+    path: 'ffmpeg'
+    default_args:
+      - '-loglevel'
+      - 'error'
+      - '-y'
+
+  mp4decrypt:
+    path: 'mp4decrypt'
+    default_args: []
+
+  mp4box:
+    path: 'MP4Box'
+    default_args: ['-quiet']
+
+# Error Handling & Reporting
+error_handling:
+  sentry:
+    dsn: ''  # Optional Sentry DSN
+    environment: 'production'
+    sample_rate: 0.5
+
+  notification:
+    email:
+      enabled: false
+      smtp:
+        host: 'smtp.gmail.com'
+        port: 587
+        use_tls: true
+    
+    telegram:
+      enabled: false
+      bot_token: ''
+      chat_id: ''
+
+# Lyrics Configuration
+lyrics:
+  preferred_format: 'LRC'
+  sync_formats:
+    - 'LRC'
+    - 'SRT'
+    - 'TTML'
+  save_unsynced: true
+
+# Performance & Caching
+performance:
+  cache:
+    enabled: true
+    backend: 'redis'  # Options: 'redis', 'memory', 'file'
+    redis:
+      host: 'localhost'
+      port: 6379
+      db: 0
+    
+  parallel_downloads:
+    max_concurrent: 3
+    timeout_seconds: 300
+
+# Privacy & Security
+privacy:
+  anonymize_metadata: false
+  skip_telemetry: true
+
+# Experimental Features
+experimental:
+  adaptive_rate_limiting: true
+  auto_update:
+    enabled: true
+    channel: 'stable'  # Options: 'stable', 'beta', 'nightly'
+
+# Debugging
+debug:
+  verbose: false
+  capture_network_logs: falsel
