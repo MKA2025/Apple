@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  gamdl:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: gamdl-app
+    volumes:
+      - ./:/app
+      - ./downloads:/app/downloads
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ENV=production
+      # Add additional environment variables here
+      # - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      # - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  # Optional: Add monitoring service
+  prometheus:
+    image: prom/prometheus
+    container_name: gamdl-monitoring
+    volumes:
+      - ./docker/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  # Optional: Logging service
+  elk:
+    image: sebp/elk
+    container_name: gamdl-logging
+    ports:
+      - "5601:5601"  # Kibana
+      - "9200:9200"  # Elasticsearch
+      - "5044:5044"  # Logstash
+    volumes:
+      - ./logs:/var/log/gamdl
+    restart: unless-stopped
+
+  # Optional: Backup service
+  backup:
+    image: ubuntu
+    container_name: gamdl-backup
+    volumes:
+      - ./downloads:/backup/downloads
+      - ./logs:/backup/logs
+    command: |
+      bash -c "
+        while true; do
+          tar -czvf /backup/gamdl-backup-$(date +%Y%m%d%H%M%S).tar.gz /backup/downloads /backup/logs
+          sleep 86400
+        done
+      "
+    restart: unless-stopped
+
+volumes:
+  downloads:
+  logs:
+  config:
+
+networks:
+  default:
+    name: gamdl-network
+    driver: bridge
